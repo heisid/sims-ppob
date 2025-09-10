@@ -94,6 +94,16 @@ class ApiClient
         return $this->makeRequest('GET', '/balance', [], true);
     }
 
+    public function getServices()
+    {
+        return $this->makeRequest('GET', '/services', [], true);
+    }
+
+    public function getBanners()
+    {
+        return $this->makeRequest('GET', '/banner', [], true);
+    }
+
     public function updateProfile($data)
     {
         return $this->makeRequest('PUT', '/profile', $data, true);

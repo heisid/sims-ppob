@@ -101,123 +101,27 @@
 </div>
 <!-- Services Grid -->
 <div class="row g-3 mb-4">
-    <div class="col-1">
-        <div class="service-item">
-            <div class="service-icon">
-                <img class="img-fluid" src="<?= base_url('/img/PBB.png'); ?>" />
+    <?php foreach($services as $service): ?>
+        <div class="col-1">
+            <div class="service-item">
+                <div class="service-icon">
+                    <img class="img-fluid" src="<?= $service['service_icon'] ?>" />
+                </div>
+                <div class="service-text"><?= $service['service_name'] ?></div>
             </div>
-            <div class="service-text">PBB</div>
         </div>
-    </div>
-    <div class="col-1">
-        <div class="service-item">
-            <div class="service-icon">
-                <img class="img-fluid" src="<?= base_url('/img/Listrik.png'); ?>" />
-            </div>
-            <div class="service-text">Listrik</div>
-        </div>
-    </div>
-    <div class="col-1">
-        <div class="service-item">
-            <div class="service-icon">
-                <img class="img-fluid" src="<?= base_url('/img/Pulsa.png'); ?>" />
-            </div>
-            <div class="service-text">Pulsa</div>
-        </div>
-    </div>
-    <div class="col-1">
-        <div class="service-item">
-            <div class="service-icon">
-                <img class="img-fluid" src="<?= base_url('/img/PDAM.png'); ?>" />
-            </div>
-            <div class="service-text">PDAM</div>
-        </div>
-    </div>
-    <div class="col-1">
-        <div class="service-item">
-            <div class="service-icon">
-                <img class="img-fluid" src="<?= base_url('/img/PGN.png'); ?>" />
-            </div>
-            <div class="service-text">PGN</div>
-        </div>
-    </div>
-    <div class="col-1">
-        <div class="service-item">
-            <div class="service-icon">
-                <img class="img-fluid" src="<?= base_url('/img/Televisi.png'); ?>" />
-            </div>
-            <div class="service-text">TV Langganan</div>
-        </div>
-    </div>
-    <div class="col-1">
-        <div class="service-item">
-            <div class="service-icon">
-                <img class="img-fluid" src="<?= base_url('/img/Musik.png'); ?>" />
-            </div>
-            <div class="service-text">Musik</div>
-        </div>
-    </div>
-    <div class="col-1">
-        <div class="service-item">
-            <div class="service-icon">
-                <img class="img-fluid" src="<?= base_url('/img/Game.png'); ?>" />
-            </div>
-            <div class="service-text">Voucher Game</div>
-        </div>
-    </div>
-    <div class="col-1">
-        <div class="service-item">
-            <div class="service-icon">
-                <img class="img-fluid" src="<?= base_url('/img/Voucher Makanan.png'); ?>" />
-            </div>
-            <div class="service-text">Voucher Makanan</div>
-        </div>
-    </div>
-    <div class="col-1">
-        <div class="service-item">
-            <div class="service-icon">
-                <img class="img-fluid" src="<?= base_url('/img/Kurban.png'); ?>" />
-            </div>
-            <div class="service-text">Kurban</div>
-        </div>
-    </div>
-    <div class="col-1">
-        <div class="service-item">
-            <div class="service-icon">
-                <img class="img-fluid" src="<?= base_url('/img/Zakat.png'); ?>" />
-            </div>
-            <div class="service-text">Zakat</div>
-        </div>
-    </div>
-    <div class="col-1">
-        <div class="service-item">
-            <div class="service-icon">
-                <img class="img-fluid" src="<?= base_url('/img/Paket Data.png'); ?>" />
-            </div>
-            <div class="service-text">Paket Data</div>
-        </div>
-    </div>
+    <?php endforeach; ?>
 </div>
 
 <!--banner-->
 <div class="mt-5">
     <h3 class="section-title">Temukan promo menarik</h3>
     <div class="row g-3 bannerSlider">
-        <div>
-            <img src="<?= base_url('/img/Banner 1.png') ?>" alt="Banner 1" class="img-fluid banner-img">
-        </div>
-        <div>
-            <img src="<?= base_url('/img/Banner 2.png') ?>" alt="Banner 2" class="img-fluid banner-img">
-        </div>
-        <div>
-            <img src="<?= base_url('/img/Banner 3.png') ?>" alt="Banner 3" class="img-fluid banner-img">
-        </div>
-        <div>
-            <img src="<?= base_url('/img/Banner 4.png') ?>" alt="Banner 3" class="img-fluid banner-img">
-        </div>
-        <div>
-            <img src="<?= base_url('/img/Banner 5.png') ?>" alt="Banner 5" class="img-fluid banner-img">
-        </div>
+        <?php foreach($banners as $banner): ?>
+            <div>
+                <img src="<?= $banner['banner_image'] ?>" alt="<?= $banner['banner_name'] ?>" class="img-fluid banner-img">
+            </div>
+        <?php endforeach; ?>
     </div>
 </div>
 

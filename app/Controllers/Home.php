@@ -23,6 +23,12 @@ class Home extends BaseController
         $balanceResponse = $apiClient->getBalance();
         $data['balance'] = $balanceResponse['data']['data']['balance'] ?? 0;
 
+        $servicesResponse = $apiClient->getServices();
+        $data['services'] = $servicesResponse['data']['data'] ?? array();
+
+        $bannersResponse = $apiClient->getBanners();
+        $data['banners'] = $bannersResponse['data']['data'] ?? array();
+
         return view('home/dashboard', $data);
     }
 }
