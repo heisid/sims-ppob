@@ -6,12 +6,11 @@ class Home extends BaseController
 {
     public function index()
     {
-//        if (session()->get('jwt_token')) {
-//            return redirect()->to('/dashboard');
-//        }
-//
-//        return view('home/index');
-        return view('home/dashboard');
+        if (session()->get('token')) {
+            return redirect()->to('/dashboard');
+        }
+
+        return redirect()->to('/auth/login');
     }
 
     public function dashboard()
@@ -19,9 +18,10 @@ class Home extends BaseController
         $apiClient = new \App\Libraries\ApiClient();
         $profileResponse = $apiClient->getProfile();
 
-        $data = [
-            'user' => $profileResponse['success'] ? $profileResponse['data'] : null
-        ];
+        $data = $profileResponse['data']['data'] ?? array();
+
+        $balanceResponse = $apiClient->getBalance();
+        $data['balance'] = $balanceResponse['data']['data']['balance'] ?? 0;
 
         return view('home/dashboard', $data);
     }

@@ -12,7 +12,7 @@ class AuthFilter implements FilterInterface
     {
         $session = session();
 
-        if (!$session->get('jwt_token') || !$session->get('user_data')) {
+        if (!$session->get('token')) {
             return redirect()->to('/auth/login')->with('error', 'Please login first');
         }
         return null;

@@ -1,6 +1,6 @@
 <?= $this->extend('layouts/auth'); ?>
 <?= $this->section('content'); ?>
-<form id="loginForm">
+<form id="loginForm" method="post">
     <!-- Email Input -->
     <div class="mb-3">
         <div class="input-group">
@@ -10,6 +10,7 @@
             <input
                 type="email"
                 id="emailInput"
+                name="email"
                 class="form-control border-start-0"
                 placeholder="masukan email anda"
                 style="border-color: #dee2e6;"
@@ -26,6 +27,7 @@
             <input
                 type="password"
                 id="passwordInput"
+                name="password"
                 class="form-control border-start-0 border-end-0"
                 placeholder="masukan password anda"
                 style="border-color: #dee2e6;"

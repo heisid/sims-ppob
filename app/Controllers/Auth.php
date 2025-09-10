@@ -15,7 +15,7 @@ class Auth extends BaseController
 
     public function login()
     {
-        if (session()->get('jwt_token')) {
+        if (session()->get('token')) {
             return redirect()->to('/dashboard');
         }
 
@@ -29,16 +29,16 @@ class Auth extends BaseController
 
         $response = $this->apiClient->login($email, $password);
 
-        if ($response['success']) {
-            $data = $response['data'];
+        $data = $response['data'];
+        if ($data['status'] == 0) {
+            $payload = $data['data'];
 
             session()->set([
-                'jwt_token' => $data['token'],
-                'user_data' => $data['user'],
+                'token' => $payload['token'],
                 'logged_in' => true
             ]);
 
-            return redirect()->to('/dashboard')->with('success', 'Login successful');
+            return redirect()->to('/dashboard');
         } else {
             return redirect()->back()
                 ->withInput()

@@ -24,8 +24,8 @@ class ApiClient
             'Accept: application/json',
         ];
 
-        if ($requireAuth && $this->session->get('jwt_token')) {
-            $headers[] = 'Authorization: Bearer ' . $this->session->get('jwt_token');
+        if ($requireAuth && $this->session->get('token')) {
+            $headers[] = 'Authorization: Bearer ' . $this->session->get('token');
         }
 
         $options = [
@@ -87,6 +87,11 @@ class ApiClient
     public function getProfile()
     {
         return $this->makeRequest('GET', '/profile', [], true);
+    }
+
+    public function getBalance()
+    {
+        return $this->makeRequest('GET', '/balance', [], true);
     }
 
     public function updateProfile($data)
