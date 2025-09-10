@@ -6,11 +6,12 @@ class Home extends BaseController
 {
     public function index()
     {
-        if (session()->get('jwt_token')) {
-            return redirect()->to('/dashboard');
-        }
-
-        return view('home/index');
+//        if (session()->get('jwt_token')) {
+//            return redirect()->to('/dashboard');
+//        }
+//
+//        return view('home/index');
+        return view('home/dashboard');
     }
 
     public function dashboard()

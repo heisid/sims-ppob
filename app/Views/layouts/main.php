@@ -22,6 +22,7 @@
             margin-right: 8px;
         }
     </style>
+    <?= $this->renderSection('css') ?>
 </head>
 <body>
 <!-- Navigation -->
