@@ -3,51 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $title ?? 'My App' ?></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css" rel="stylesheet">
+    <title>SIMS PPOB - Rosyid Haryadi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #333 !important;
+        }
+
+        .logo {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+    </style>
 </head>
 <body>
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="<?= base_url('/') ?>">My App</a>
-
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <img src="<?= base_url('/img/Logo.png') ?>" alt="Logo" class="logo">
+            SIMS PPOB
+        </a>
         <div class="navbar-nav ms-auto">
-            <?php if (session()->get('logged_in')): ?>
-                <a class="nav-link" href="<?= base_url('/dashboard') ?>">Dashboard</a>
-                <a class="nav-link" href="<?= base_url('/profile') ?>">Profile</a>
-                <a class="nav-link" href="<?= base_url('/topup') ?>">Top Up</a>
-                <a class="nav-link" href="<?= base_url('/transaction') ?>">Transactions</a>
-                <a class="nav-link" href="<?= base_url('/auth/logout') ?>">Logout</a>
-            <?php else: ?>
-                <a class="nav-link" href="<?= base_url('/auth/login') ?>">Login</a>
-                <a class="nav-link" href="<?= base_url('/auth/register') ?>">Register</a>
-            <?php endif; ?>
+            <a class="nav-link" href="#">Top Up</a>
+            <a class="nav-link" href="#">Transaction</a>
+            <a class="nav-link" href="#">Akun</a>
         </div>
     </div>
 </nav>
 
-<!-- Main Content -->
 <div class="container mt-4">
-    <!-- Flash Messages -->
-    <?php if (session()->getFlashdata('success')): ?>
-        <div class="alert alert-success alert-dismissible fade show">
-            <?= session()->getFlashdata('success') ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    <?php endif; ?>
-
-    <?php if (session()->getFlashdata('error')): ?>
-        <div class="alert alert-danger alert-dismissible fade show">
-            <?= session()->getFlashdata('error') ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    <?php endif; ?>
-
-    <?= $this->renderSection('content') ?>
+    <?= $this->renderSection('content'); ?>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/321a7ce62f.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
