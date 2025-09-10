@@ -1,71 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $title ?? 'SIMS PPOB - Login' ?></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css" rel="stylesheet">
+    <title>SIMS PPOB - Rosyid Haryadi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #f8f9fa;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif;
         }
     </style>
 </head>
 <body>
-<!-- Flash Messages (positioned fixed for auth pages) -->
-<?php if (session()->getFlashdata('success')): ?>
-    <div class="position-fixed top-0 start-50 translate-middle-x mt-3" style="z-index: 1050;">
-        <div class="alert alert-success alert-dismissible fade show">
-            <i class="bi bi-check-circle-fill me-2"></i>
-            <?= session()->getFlashdata('success') ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+<div class="container-fluid vh-100 p-0">
+    <div class="row h-100 g-0">
+        <!-- Left side - Login Form -->
+        <div class="col-md-6 d-flex align-items-center justify-content-center" style="background-color: #ffffff;">
+            <div class="w-100" style="max-width: 400px; padding: 0 2rem;">
+                <!-- Logo and Title -->
+                <div class="text-center mb-4">
+                    <div class="d-flex align-items-center justify-content-center mb-3">
+                        <img src="<?= base_url('img/Logo.png') ?>" alt="SIMS PPOB Logo" width="32" height="32" class="me-2">
+                        <h4 class="mb-0 fw-bold" style="color: #333333;">SIMS PPOB</h4>
+                    </div>
+                    <h2 class="fw-bold mb-1" style="color: #333333; font-size: 1.75rem;">
+                        Masuk atau buat akun
+                    </h2>
+                    <h2 class="fw-bold" style="color: #333333; font-size: 1.75rem;">
+                        untuk memulai
+                    </h2>
+                </div>
+
+                <?= $this->renderSection('content'); ?>
+            </div>
+        </div>
+
+        <!-- Right side - Illustration -->
+        <div class="col-md-6 d-flex align-items-center justify-content-center" style="background-color: #fdf2f8;">
+            <img src="<?= base_url('img/Illustrasi_Login.png') ?>" alt="Login Illustration" class="img-fluid" style="max-width: 400px; height: auto;">
         </div>
     </div>
-<?php endif; ?>
 
-<?php if (session()->getFlashdata('error')): ?>
-    <div class="position-fixed top-0 start-50 translate-middle-x mt-3" style="z-index: 1050;">
-        <div class="alert alert-danger alert-dismissible fade show">
-            <i class="bi bi-exclamation-circle-fill me-2"></i>
-            <?= session()->getFlashdata('error') ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <!-- Error Toast -->
+    <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x mb-3">
+        <div id="errorToast" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body"></div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
         </div>
     </div>
-<?php endif; ?>
+</div>
 
-<?= $this->renderSection('content') ?>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Form validation script -->
-<script>
-    // Bootstrap form validation
-    (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-            var forms = document.getElementsByClassName('needs-validation');
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
-
-    // Auto-hide alerts after 5 seconds
-    setTimeout(function() {
-        var alerts = document.querySelectorAll('.alert');
-        alerts.forEach(function(alert) {
-            var bsAlert = new bootstrap.Alert(alert);
-            bsAlert.close();
-        });
-    }, 5000);
-</script>
+<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/321a7ce62f.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<?= $this->renderSection('js'); ?>
 </body>
 </html>
