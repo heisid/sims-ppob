@@ -59,7 +59,7 @@
 <div class="row g-3 mb-4">
     <?php foreach($services as $service): ?>
         <div class="col-1">
-            <div class="service-item">
+            <div class="service-item" data-code="<?= $service['service_code'] ?>">
                 <div class="service-icon">
                     <img class="img-fluid" src="<?= $service['service_icon'] ?>" />
                 </div>
@@ -95,6 +95,13 @@
             centerPadding: '100px',
             slidesToShow: 4,
         })
+
+        $('.service-item').click(function() {
+            const serviceCode = $(this).data('code')
+            if (serviceCode) {
+                window.location.href = `/transaction/pay/${serviceCode}`;
+            }
+        });
     })
 </script>
 <?= $this->include('partials/profile_balance_js') ?>

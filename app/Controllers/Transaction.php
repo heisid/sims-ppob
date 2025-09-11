@@ -35,4 +35,27 @@ class Transaction extends BaseController
 
         return view('transaction/detail', $data);
     }
+
+    public function pay($code)
+    {
+        $servicesResponse = $this->apiClient->getServices();
+        $services = $servicesResponse['data']['data'];
+        $data = array();
+        foreach ($services as $serviceItem) {
+            if ($serviceItem['service_code'] == $code) {
+                $data['service'] = $serviceItem;
+                break;
+            }
+        }
+
+        if (count($data) == 0) return redirect('/dashboard')->with('errors', 'Kode pembayaran tidak valid');
+
+        $profileResponse = $this->apiClient->getProfile();
+        $data['profile'] = $profileResponse['data']['data'] ?? array();
+
+        $balanceResponse = $this->apiClient->getBalance();
+        $data['balance'] = $balanceResponse['data']['data']['balance'] ?? 0;
+
+        return view('transaction/pay', $data);
+    }
 }
