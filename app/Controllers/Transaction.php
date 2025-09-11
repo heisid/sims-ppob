@@ -51,7 +51,9 @@ class Transaction extends BaseController
         if (count($data) == 0) return redirect('/dashboard')->with('errors', 'Kode pembayaran tidak valid');
 
         $profileResponse = $this->apiClient->getProfile();
-        $data['profile'] = $profileResponse['data']['data'] ?? array();
+        $profile = $profileResponse['data']['data'] ?? array();
+        $data['first_name'] = $profile['first_name'];
+        $data['last_name'] = $profile['last_name'];
 
         $balanceResponse = $this->apiClient->getBalance();
         $data['balance'] = $balanceResponse['data']['data']['balance'] ?? 0;

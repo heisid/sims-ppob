@@ -21,6 +21,13 @@
             height: 24px;
             margin-right: 8px;
         }
+
+        .section-title {
+            color: #333;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
     </style>
     <?= $this->renderSection('css') ?>
 </head>

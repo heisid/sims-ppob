@@ -37,13 +37,6 @@
         margin-top: 5px;
     }
 
-    .section-title {
-        color: #333;
-        font-size: 16px;
-        font-weight: 600;
-        margin-bottom: 20px;
-    }
-
     .banner-img {
         padding: 10px;
         cursor: pointer;
