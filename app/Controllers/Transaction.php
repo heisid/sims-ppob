@@ -3,6 +3,9 @@
 namespace App\Controllers;
 
 use App\Libraries\ApiClient;
+use DateTime;
+use DateTimeZone;
+use PHPUnit\Exception;
 
 class Transaction extends BaseController
 {
@@ -15,14 +18,45 @@ class Transaction extends BaseController
 
     public function index()
     {
-        $page = $this->request->getGet('page') ?? 1;
-        $response = $this->apiClient->getTransactions($page);
+        $response = $this->apiClient->getTransactions();
+        if ($response['success']) {
+            $transactions = $response['data']['data']['records'];
+            $this->convertTransactionsDate($transactions);
+            $data['transactions'] = $transactions;
+        } else $data['transactions'] = [];
 
-        $data = [
-            'transactions' => $response['success'] ? $response['data'] : []
-        ];
+        $profileResponse = $this->apiClient->getProfile();
+        $profile = $profileResponse['data']['data'] ?? array();
+        $data['first_name'] = $profile['first_name'];
+        $data['last_name'] = $profile['last_name'];
+
+        $balanceResponse = $this->apiClient->getBalance();
+        $data['balance'] = $balanceResponse['data']['data']['balance'] ?? 0;
 
         return view('transaction/index', $data);
+    }
+
+    private function convertTransactionsDate(&$transactions)
+    {
+        foreach ($transactions as &$transaction) {
+            try {
+                $date = new DateTime($transaction['created_on'], new DateTimeZone("UTC"));
+                $date->setTimezone(new DateTimeZone("Asia/Jakarta"));
+                $transaction['created_on'] = $date->format("d F Y · H:i") . " WIB";
+            } catch (\Exception $e) {}
+        }
+        return $transactions;
+    }
+
+    public function getTransactionsWithOffset($offset)
+    {
+        $response = $this->apiClient->getTransactions($offset);
+        if ($response['success']) {
+            $transactions = $response['data']['data']['records'];
+            $this->convertTransactionsDate($transactions);
+            return $this->response->setJSON($transactions);
+        }
+        return $this->response->setStatusCode($response['http_code'])->setJSON([]);
     }
 
     public function detail($id)

@@ -39,9 +39,9 @@
             SIMS PPOB
         </a>
         <div class="navbar-nav ms-auto">
-            <a class="nav-link" href="#">Top Up</a>
-            <a class="nav-link" href="#">Transaction</a>
-            <a class="nav-link" href="<?= base_url('profile') ?>">Akun</a>
+            <a class="nav-link" href="/transaction/topup">Top Up</a>
+            <a class="nav-link" href="/transaction">Transaction</a>
+            <a class="nav-link" href="/profile">Akun</a>
         </div>
     </div>
 </nav>

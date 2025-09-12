@@ -30,7 +30,7 @@ $routes->group('topup', ['filter' => 'auth'], function($routes) {
 
 $routes->group('transaction', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'Transaction::index');
-    $routes->get('(:num)', 'Transaction::detail/$1');
+    $routes->get('(:num)', 'Transaction::getTransactionsWithOffset/$1');
     $routes->get('pay/(:any)', 'Transaction::pay/$1');
     $routes->post('pay', 'Transaction::doPay');
 });

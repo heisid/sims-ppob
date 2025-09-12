@@ -119,9 +119,9 @@ class ApiClient
         return $this->makeRequest('POST', '/transaction', ['service_code' => $serviceCode], true);
     }
 
-    public function getTransactions($page = 1, $limit = 10)
+    public function getTransactions($offset = 0, $limit = 5)
     {
-        return $this->makeRequest('GET', "/transaction/history?page={$page}&limit={$limit}", [], true);
+        return $this->makeRequest('GET', "/transaction/history?offset={$offset}&limit={$limit}", [], true);
     }
 
     public function getTransactionDetail($id)

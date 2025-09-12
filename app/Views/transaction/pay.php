@@ -136,7 +136,7 @@
             <div class="price-text">Rp<?= number_format($service['service_tariff'], 0, ',', '.') ?></div>
             <div class="modal-title">berhasil</div>
             <div class="d-grid gap-2">
-                <button type="button" id="btn-home" class="btn btn-red">Kembali Ke Beranda</button>
+                <button type="button" class="btn btn-red btn-home">Kembali Ke Beranda</button>
             </div>
         </div>
     </div>
@@ -152,7 +152,7 @@
             <div class="price-text">Rp<?= number_format($service['service_tariff'], 0, ',', '.') ?></div>
             <div class="modal-title">gagal</div>
             <div class="d-grid gap-2">
-                <button type="button" id="btn-home" class="btn btn-red">Kembali Ke Beranda</button>
+                <button type="button" class="btn btn-red btn-home">Kembali Ke Beranda</button>
             </div>
         </div>
     </div>
@@ -190,7 +190,7 @@
                 }
             })
         })
-        $("#btn-home").on("click", function () {
+        $(".btn-home").on("click", function () {
             window.location.href = "/dashboard"
         })
     })
