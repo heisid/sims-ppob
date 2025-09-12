@@ -106,7 +106,7 @@ class ApiClient
 
     public function updateProfile($data)
     {
-        return $this->makeRequest('PUT', '/profile', $data, true);
+        return $this->makeRequest('PUT', '/profile/update', $data, true);
     }
 
     public function topUp($amount)

@@ -92,9 +92,10 @@
     <div class="text-center mb-4">
         <div class="position-relative d-inline-block">
             <img
-                src="<?= $profile_image ?>"
-                alt="Profile"
-                class="rounded-circle profile-image"
+                    id="profile-img"
+                    src="<?= $profile_image ?>"
+                    alt="Profile"
+                    class="rounded-circle profile-image"
             />
             <button class="btn btn-light btn-sm rounded-circle edit-icon">
                 <i class="fas fa-pencil-alt" style="font-size: 10px"></i>
@@ -102,45 +103,90 @@
         </div>
     </div>
 
-    <h2 class="profile-name"><?= $first_name ?> <?= $last_name ?? '' ?></h2>
+    <h2 id="profile-name" class="profile-name"><?= $first_name ?> <?= $last_name ?? '' ?></h2>
 
-    <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <div class="input-group">
+    <form id="profile-form">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <div class="input-group">
                     <span class="input-group-text">
                         <i class="fas fa-envelope"></i>
                     </span>
-            <input type="email" class="form-control" id="email" value="<?= $email ?>" readonly>
+                <input type="email" class="form-control" value="<?= $email ?>" readonly>
+            </div>
         </div>
-    </div>
 
-    <div class="mb-3">
-        <label for="firstName" class="form-label">Nama Depan</label>
-        <div class="input-group">
+        <div class="mb-3">
+            <label for="firstName" class="form-label">Nama Depan</label>
+            <div class="input-group">
                     <span class="input-group-text">
                         <i class="fas fa-user"></i>
                     </span>
-            <input type="text" class="form-control" id="firstName" value="<?= $first_name ?>" readonly>
+                <input type="text" class="editable form-control" name="first_name" id="firstName" value="<?= $first_name ?>" readonly>
+            </div>
         </div>
-    </div>
 
-    <div class="mb-3">
-        <label for="lastName" class="form-label">Nama Belakang</label>
-        <div class="input-group">
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Nama Belakang</label>
+            <div class="input-group">
                     <span class="input-group-text">
                         <i class="fas fa-user"></i>
                     </span>
-            <input type="text" class="form-control" id="lastName" value="<?= $last_name ?>" readonly>
+                <input type="text" class="editable form-control" name="last_name" id="lastName" value="<?= $last_name ?>" readonly>
+            </div>
         </div>
-    </div>
-
+    </form>
     <div class="mt-4">
-        <button type="button" class="btn btn-danger btn-edit">
+        <button id="btn-edit" type="button" class="btn btn-danger btn-edit">
             Edit Profil
         </button>
-        <a type="button" href="<?= base_url('auth/logout') ?>" class="btn btn-outline-danger btn-logout">
+        <button id="btn-logout-cancel" type="button" class="btn btn-outline-danger btn-logout">
             Logout
-        </a>
+        </button>
     </div>
 </div>
+<?= $this->endSection(); ?>
+
+<?= $this->section('js') ?>
+<script>
+    const editBtn = $("#btn-edit")
+    const logoutCancelBtn = $("#btn-logout-cancel")
+    const editableInput = $(".editable")
+    const form = $("#profile-form")
+    const profileImg = $("#profile-img")
+    const profileName = $("#profile-name")
+
+    editBtn.on("click", function() {
+        if ($(this).text().trim() === "Edit Profil") {
+            editableInput.prop("readonly", false)
+            $(this).text("Simpan")
+            logoutCancelBtn.text("Batalkan")
+        } else {
+            $.ajax({
+                url: "/profile",
+                type: "POST",
+                data: form.serialize(),
+                success: function (response) {
+                    profileName.text(`${response.first_name} ${response.last_name}`)
+
+                    editBtn.text("Edit Profil")
+                    editableInput.prop("readonly", true)
+                    logoutCancelBtn.text("Logout")
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error:", error)
+                }
+            })
+        }
+    })
+
+    logoutCancelBtn.on("click", function() {
+        if ($(this).text().trim() === "Logout") window.location.href = "/auth/logout"
+        else {
+            $(this).text("Logout")
+            editBtn.text("Edit Profil")
+            editableInput.prop("readonly", true)
+        }
+    })
+</script>
 <?= $this->endSection(); ?>

@@ -19,8 +19,7 @@ $routes->group('auth', function($routes) {
 
 $routes->group('profile', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'Profile::index');
-    $routes->get('edit', 'Profile::edit');
-    $routes->post('update', 'Profile::update');
+    $routes->post('/', 'Profile::update');
 });
 
 $routes->group('transaction', ['filter' => 'auth'], function($routes) {
