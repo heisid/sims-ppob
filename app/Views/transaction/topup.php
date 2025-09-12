@@ -263,6 +263,10 @@
         topupBtn.prop("disabled", false)
     })
     topupBtn.on("click", function () {
+        if (nominalInput.val() < 10000 || nominalInput.val() > 1000000) {
+            showError('Nominal top up harus di antara Rp10.000 - Rp1.000.000')
+            return
+        }
         confirmModal.modal("toggle")
     })
     nominalInput.on('keyup', function() {
@@ -274,10 +278,6 @@
         }
     })
     confirmBtn.on("click", function() {
-        if (nominalInput.val() < 10000 || nominalInput.val() > 1000000) {
-            showError('Nominal top up harus di antara Rp10.000 - Rp1.000.000')
-            return
-        }
         const payload = {
             top_up_amount: nominalInput.val(),
         }
