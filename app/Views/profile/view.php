@@ -182,6 +182,8 @@
                     editableInput.prop("readonly", true)
                     logoutCancelBtn.text("Logout")
                     editPropicBtn.hide()
+
+                    showSuccess("Profil berhasil diupdate")
                 },
                 error: function (xhr, status, error) {
                     console.error("Error:", error)

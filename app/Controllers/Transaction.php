@@ -63,7 +63,7 @@ class Transaction extends BaseController
             }
         }
 
-        if (count($data) == 0) return redirect('/dashboard')->with('errors', 'Kode pembayaran tidak valid');
+        if (count($data) == 0) return redirect('dashboard')->with('error', 'Kode pembayaran tidak valid');
 
         return view('transaction/pay', $data);
     }
