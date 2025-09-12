@@ -16,5 +16,8 @@
 
     $(document).ready(function() {
         $(".toggleBalance").on("click", toggleBalance)
+        $("#profile-image").on("error", function () {
+            $(this).attr("src", "/img/Profile Photo.png")
+        })
     })
 </script>

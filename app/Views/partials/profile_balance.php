@@ -1,7 +1,7 @@
 <div class="row g-3 mb-4">
     <div class="col-md-6">
         <div class="align-items-center mb-4">
-            <img src="<?= session()->get('profile')['profile_image'] ?? base_url('/img/Profile Photo.png'); ?>" alt="User Avatar" class="user-avatar me-3">
+            <img id="profile-image" src="<?= session()->get('profile')['profile_image'] ?? base_url('/img/Profile Photo.png'); ?>" alt="User Avatar" class="user-avatar me-3">
             <div>
                 <div class="welcome-text">Selamat datang,</div>
                 <h2 class="user-name"><?= session()->get('profile')['first_name'] ?> <?= session()->get('profile')['last_name'] ?></h2>
