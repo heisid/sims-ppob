@@ -25,6 +25,8 @@ class TopUp extends BaseController
         $response = $this->apiClient->topUp($amount);
 
         if ($response['success']) {
+            $balanceResponse = $this->apiClient->getBalance();
+            if ($balanceResponse['success']) session()->set(['balance' => $balanceResponse['data']['data']['balance']]);
             return redirect()->to('/topup')
                 ->with('success', 'Top up successful');
         } else {

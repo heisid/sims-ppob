@@ -1,5 +1,5 @@
 <script>
-    const realBalance = "Rp <?= number_format($balance, 0, ',', '.') ?>"
+    const realBalance = "Rp <?= number_format(session()->get('balance'), 0, ',', '.') ?>"
     let isVisible = false
 
     function toggleBalance() {

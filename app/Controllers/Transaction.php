@@ -25,13 +25,8 @@ class Transaction extends BaseController
             $data['transactions'] = $transactions;
         } else $data['transactions'] = [];
 
-        $profileResponse = $this->apiClient->getProfile();
-        $profile = $profileResponse['data']['data'] ?? array();
-        $data['first_name'] = $profile['first_name'];
-        $data['last_name'] = $profile['last_name'];
-
-        $balanceResponse = $this->apiClient->getBalance();
-        $data['balance'] = $balanceResponse['data']['data']['balance'] ?? 0;
+        $data['profile'] = session()->get('profile');
+        $data['balance'] = session()->get('balance');
 
         return view('transaction/index', $data);
     }
@@ -59,17 +54,6 @@ class Transaction extends BaseController
         return $this->response->setStatusCode($response['http_code'])->setJSON([]);
     }
 
-    public function detail($id)
-    {
-        $response = $this->apiClient->getTransactionDetail($id);
-
-        $data = [
-            'transaction' => $response['success'] ? $response['data'] : null
-        ];
-
-        return view('transaction/detail', $data);
-    }
-
     public function pay($code)
     {
         $servicesResponse = $this->apiClient->getServices();
@@ -84,13 +68,8 @@ class Transaction extends BaseController
 
         if (count($data) == 0) return redirect('/dashboard')->with('errors', 'Kode pembayaran tidak valid');
 
-        $profileResponse = $this->apiClient->getProfile();
-        $profile = $profileResponse['data']['data'] ?? array();
-        $data['first_name'] = $profile['first_name'];
-        $data['last_name'] = $profile['last_name'];
-
-        $balanceResponse = $this->apiClient->getBalance();
-        $data['balance'] = $balanceResponse['data']['data']['balance'] ?? 0;
+        $data['profile'] = session()->get('profile');
+        $data['balance'] = session()->get('balance');
 
         return view('transaction/pay', $data);
     }
@@ -103,6 +82,8 @@ class Transaction extends BaseController
 
         $paymentResponse = $this->apiClient->pay($serviceCode);
         if ($paymentResponse['success']) {
+            $balanceResponse = $this->apiClient->getBalance();
+            if ($balanceResponse['success']) session()->set(['balance' => $balanceResponse['data']['data']['balance']]);
             return $this->response->setJSON($paymentResponse);
         }
         return $this->response->setStatusCode($paymentResponse['http_code']);

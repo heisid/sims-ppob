@@ -35,8 +35,20 @@ class Auth extends BaseController
 
             session()->set([
                 'token' => $payload['token'],
-                'logged_in' => true
+                'logged_in' => true,
             ]);
+
+            $profileResponse = $this->apiClient->getProfile();
+            $profile = $profileResponse['data']['data'] ?? array();
+
+            $balanceResponse = $this->apiClient->getBalance();
+            $balance = $balanceResponse['data']['data']['balance'] ?? 0;
+
+            session()->set([
+                'profile' => $profile,
+                'balance' => $balance,
+            ]);
+
 
             return redirect()->to('/dashboard');
         } else {

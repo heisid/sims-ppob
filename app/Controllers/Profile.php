@@ -15,9 +15,7 @@ class Profile extends BaseController
 
     public function index()
     {
-        $profileResponse = $this->apiClient->getProfile();
-
-        $data = $profileResponse['data']['data'] ?? array();
+        $data = session()->get('profile');
 
         return view('profile/view', $data);
     }
