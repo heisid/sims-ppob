@@ -63,7 +63,7 @@
                 style="border-color: #dee2e6;"
             >
             <span class="input-group-text bg-white border-start-0" id="togglePassword" style="border-color: #dee2e6; cursor: pointer;">
-                <span id="eyeIcon"><i class="fa-regular fa-eye-slash"></i></i></span>
+                <span id="eyeIcon"><i class="fa-regular fa-eye"></i></i></span>
             </span>
         </div>
     </div>
@@ -82,7 +82,7 @@
                 style="border-color: #dee2e6;"
             >
             <span class="input-group-text bg-white border-start-0" id="toggleConfirmPassword" style="border-color: #dee2e6; cursor: pointer;">
-                <span id="eyeIcon"><i class="fa-regular fa-eye-slash"></i></i></span>
+                <span id="eyeIcon"><i class="fa-regular fa-eye"></i></i></span>
             </span>
         </div>
     </div>
@@ -137,8 +137,6 @@
             if (!confirmPassword) return showError("Konfirmasi password tidak boleh kosong!");
             if (password !== confirmPassword) return showError("Password dan konfirmasi tidak sama!");
 
-            // ✅ Passed validation → submit form
-            console.log("Form registrasi valid. Lanjutkan proses...");
             this.submit();
         });
 
@@ -147,24 +145,23 @@
             toast.show();
         }
 
-        // Toggle password visibility
         $("#togglePassword").on("click", function () {
             if ($password.attr("type") === "password") {
                 $password.attr("type", "text");
-                $(this).find("#eyeIcon").html('<i class="fa-regular fa-eye"></i>');
+                $(this).find("#eyeIcon").html('<i class="fa-regular fa-eye-slash"></i>');
             } else {
                 $password.attr("type", "password");
-                $(this).find("#eyeIcon").html('<i class="fa-regular fa-eye-slash"></i>');
+                $(this).find("#eyeIcon").html('<i class="fa-regular fa-eye"></i>');
             }
         });
 
         $("#toggleConfirmPassword").on("click", function () {
             if ($confirmPassword.attr("type") === "password") {
                 $confirmPassword.attr("type", "text");
-                $(this).find("#eyeIcon").html('<i class="fa-regular fa-eye"></i>');
+                $(this).find("#eyeIcon").html('<i class="fa-regular fa-eye-slash"></i>');
             } else {
                 $confirmPassword.attr("type", "password");
-                $(this).find("#eyeIcon").html('<i class="fa-regular fa-eye-slash"></i>');
+                $(this).find("#eyeIcon").html('<i class="fa-regular fa-eye"></i>');
             }
         });
     });

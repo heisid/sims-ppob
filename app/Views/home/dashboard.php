@@ -21,7 +21,6 @@
         margin-bottom: 20px;
         cursor: pointer;
         transition: transform 0.2s;
-        background-color: rgb(240, 240, 240);
         padding: 10px;
         border-radius: 12px;
         height: 100%;

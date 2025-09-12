@@ -33,7 +33,7 @@
                 style="border-color: #dee2e6;"
             >
             <span class="input-group-text bg-white border-start-0" id="togglePassword" style="border-color: #dee2e6; cursor: pointer;">
-                <span id="eyeIcon"><i class="fa-regular fa-eye-slash"></i></i></span>
+                <span id="eyeIcon"><i class="fa-regular fa-eye"></i></i></span>
             </span>
         </div>
     </div>
@@ -84,14 +84,13 @@
             toast.show();
         }
 
-        // Toggle password visibility
         $("#togglePassword").on("click", function () {
             if ($passwordInput.attr("type") === "password") {
                 $passwordInput.attr("type", "text");
-                $("#eyeIcon").html('<i class="fa-regular fa-eye"></i>');
+                $("#eyeIcon").html('<i class="fa-regular fa-eye-slash"></i>');
             } else {
                 $passwordInput.attr("type", "password");
-                $("#eyeIcon").html('<i class="fa-regular fa-eye-slash"></i>');
+                $("#eyeIcon").html('<i class="fa-regular fa-eye"></i>');
             }
         });
     });

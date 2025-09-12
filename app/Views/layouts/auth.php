@@ -9,6 +9,11 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif;
         }
+        .right-side {
+            background-image: url("<?= base_url('img/Illustrasi_Login.png') ?>");
+            background-size: cover;
+            background-position: center;
+        }
     </style>
 </head>
 <body>
@@ -36,8 +41,7 @@
         </div>
 
         <!-- Right side - Illustration -->
-        <div class="col-md-6 d-flex align-items-center justify-content-center" style="background-color: #fdf2f8;">
-            <img src="<?= base_url('img/Illustrasi_Login.png') ?>" alt="Login Illustration" class="img-fluid" style="max-width: 400px; height: auto;">
+        <div class="col-md-6 d-flex align-items-center justify-content-center right-side">
         </div>
     </div>
 

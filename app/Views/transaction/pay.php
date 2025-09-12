@@ -2,6 +2,77 @@
 
 <?= $this->section('css'); ?>
 <?= $this->include('partials/profile_balance_css') ?>
+<style>
+    #nominalInput[disabled] {
+        background-color: #fff !important;
+        color: #212529;
+        opacity: 1;
+    }
+    .logo-circle {
+        width: 80px;
+        height: 80px;
+        background-image: url("<?= base_url('img/Logo.png') ?>");
+        background-size: cover;
+        background-position: center;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 30px auto;
+    }
+    .modal-title {
+        color: #6c757d;
+        font-size: 18px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .price-text {
+        color: #212529;
+        font-size: 32px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .btn-pay {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: white;
+        font-weight: 500;
+        padding: 12px 30px;
+        font-size: 16px;
+        border-radius: 6px;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .btn-pay:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+        color: white;
+    }
+
+    .btn-cancel {
+        background-color: transparent;
+        border: none;
+        color: #6c757d;
+        font-size: 16px;
+        padding: 12px 30px;
+        width: 100%;
+    }
+
+    .btn-cancel:hover {
+        color: #495057;
+        background-color: #f8f9fa;
+    }
+
+    .modal-content {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        padding: 40px 30px;
+    }
+</style>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content'); ?>
@@ -35,13 +106,15 @@
     </button>
 </div>
 
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="text-center mt-5 mb-5""><img src="<?= base_url('/img/Logo.png') ?>" alt="Logo" class="logo"></div>
-                <div class="text-center mb-3">Beli <?= $service['service_name'] ?> senilai</div>
-                <div class="text-center"><h4>Rp <?= number_format($service['service_tariff'], 0, ',', '.') ?> ?</h4></div>
+<div class="modal fade" id="confirmModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
+        <div class="modal-content" style="border: none; border-radius: 12px; padding: 40px 30px;">
+            <div class="logo-circle"></div>
+            <div class="modal-title">Beli <?= $service['service_name'] ?> senilai</div>
+            <div class="price-text">Rp<?= number_format($service['service_tariff'], 0, ',', '.') ?>?</div>
+            <div class="d-grid gap-2">
+                <button type="button" class="btn btn-pay">Ya, lanjutkan Bayar</button>
+                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Batalkan</button>
             </div>
         </div>
     </div>
