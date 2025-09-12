@@ -164,32 +164,40 @@
 <?= $this->include('partials/profile_balance_js') ?>
 <script>
     $(document).ready(function () {
-        $("#btn-pay").on("click", function () {
+        const payBtn = $("#btn-pay")
+        const loading = $(".loading")
+        const paymentConfirm = $(".payment-confirm")
+        const confirmModal = $("#confirmModal")
+        const successModal = $("#successModal")
+        const failModal = $("#failModal")
+        const homeBtn = $(".btn-home")
+
+        payBtn.on("click", function () {
             const payload = {
                 service_code: "<?= $service['service_code'] ?>",
             }
-            $(".loading").removeClass("d-none")
-            $(".payment-confirm").hide()
+            loading.removeClass("d-none")
+            paymentConfirm.hide()
             $.post({
                 url: "/transaction/pay",
                 data: JSON.stringify(payload),
                 contentType: "application/json",
                 success: function (response) {
-                    $(".loading").addClass("d-none")
-                    $(".payment-confirm").show()
-                    $("#confirmModal").modal("toggle")
-                    $("#successModal").modal("toggle")
+                    loading.addClass("d-none")
+                    paymentConfirm.show()
+                    confirmModal.modal("toggle")
+                    successModal.modal("toggle")
                 },
                 error: function (xhr, status, error) {
                     console.error("Error:", error)
-                    $(".loading").addClass("d-none")
-                    $(".payment-confirm").show()
-                    $("#confirmModal").modal("toggle")
-                    $("#failModal").modal("toggle")
+                    loading.addClass("d-none")
+                    paymentConfirm.show()
+                    confirmModal.modal("toggle")
+                    failModal.modal("toggle")
                 }
             })
         })
-        $(".btn-home").on("click", function () {
+        homeBtn.on("click", function () {
             window.location.href = "/dashboard"
         })
     })

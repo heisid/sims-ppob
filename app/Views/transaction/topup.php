@@ -88,6 +88,70 @@
         background-color: #007bff;
         color: white;
     }
+    .logo-circle {
+        width: 80px;
+        height: 80px;
+        background-image: url("<?= base_url('img/Logo.png') ?>");
+        background-size: cover;
+        background-position: center;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 30px auto;
+    }
+    .modal-title {
+        color: #6c757d;
+        font-size: 18px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .price-text {
+        color: #212529;
+        font-size: 32px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .btn-red {
+        color: #dc3545;
+        background-color: white;
+        font-weight: 500;
+        padding: 12px 30px;
+        font-size: 16px;
+        border-radius: 6px;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .btn-red:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+        color: white;
+    }
+
+    .btn-cancel {
+        background-color: transparent;
+        border: none;
+        color: #6c757d;
+        font-size: 16px;
+        padding: 12px 30px;
+        width: 100%;
+    }
+
+    .btn-cancel:hover {
+        color: #495057;
+        background-color: #f8f9fa;
+    }
+
+    .modal-content {
+        border: none;
+        border-radius: 12px;
+        min-height: 300px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        padding: 40px 30px;
+    }
 </style>
 <?= $this->endSection(); ?>
 
@@ -124,12 +188,53 @@
     </div>
 </div>
 
-<div class="modal fade" id="loadingModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered" style="max-width: 200px;">
+<div class="modal fade" id="confirmModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
         <div class="modal-content" style="border: none; border-radius: 12px; padding: 40px 30px;">
-            <div class="d-flex flex-column justify-content-center align-items-center gap-3">
+            <div class="confirm-text">
+                <div class="logo-circle"></div>
+                <div class="modal-title">Anda Yakin Untuk topup sebesar</div>
+                <div class="price-text">Rp<span class="nominal-text"></span></div>
+                <div class="d-grid gap-2">
+                    <button type="button" id="btn-confirm" class="btn btn-red">Ya, lanjutkan Top Up</button>
+                    <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Batalkan</button>
+                </div>
+            </div>
+            <div class="loading d-flex flex-column justify-content-center align-items-center gap-3 d-none">
                 <div class="spinner-border" role="status"></div>
                 <p>Mohon Tunggu</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="successModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
+        <div class="modal-content" style="border: none; border-radius: 12px; padding: 40px 30px;">
+            <div style="display: flex; align-items: center; justify-content: center; font-size: 3em; color: green; padding-bottom: 20px;">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="modal-title">Top Up sebesar</div>
+            <div class="price-text">Rp<span class="nominal-text"></span></div>
+            <div class="modal-title">berhasil</div>
+            <div class="d-grid gap-2">
+                <button type="button" class="btn btn-red btn-home">Kembali Ke Beranda</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="failModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
+        <div class="modal-content" style="border: none; border-radius: 12px; padding: 40px 30px;">
+            <div style="display: flex; align-items: center; justify-content: center; font-size: 3em; color: red; padding-bottom: 20px;">
+                <i class="fa-solid fa-circle-xmark"></i>
+            </div>
+            <div class="modal-title">Top Up sebesar</div>
+            <div class="price-text">Rp<span class="nominal-text"></span></div>
+            <div class="modal-title">gagal</div>
+            <div class="d-grid gap-2">
+                <button type="button" class="btn btn-red btn-home">Kembali Ke Beranda</button>
             </div>
         </div>
     </div>
@@ -142,19 +247,33 @@
     const amountBtn = $(".amount-btn")
     const nominalInput = $("#nominalInput")
     const topupBtn = $("#topup-btn")
-    const loadingModal = $("#loadingModal")
+    const confirmBtn = $("#btn-confirm")
+    const confirmModal = $("#confirmModal")
+    const confirmText = $(".confirm-text")
+    const loading = $(".loading")
+    const successModal = $("#successModal")
+    const failModal = $("#failModal")
+    const homeBtn = $(".btn-home")
+    const nominalText = $(".nominal-text")
 
     amountBtn.on("click", function () {
         const amount = $(this).data("amount")
         nominalInput.val(amount)
+        nominalText.text(amount.toLocaleString("id-ID"))
         topupBtn.prop("disabled", false)
+    })
+    topupBtn.on("click", function () {
+        confirmModal.modal("toggle")
     })
     nominalInput.on('keyup', function() {
         $(this).val($(this).val().replace(/[^0-9]/g, ''))
         if ($(this).val() === '') topupBtn.prop("disabled", true)
-        else topupBtn.prop("disabled", false)
+        else {
+            topupBtn.prop("disabled", false)
+            nominalText.text(parseFloat($(this).val()).toLocaleString("id-ID"))
+        }
     })
-    topupBtn.on("click", function() {
+    confirmBtn.on("click", function() {
         if (nominalInput.val() < 10000 || nominalInput.val() > 1000000) {
             showError('Nominal top up harus di antara Rp10.000 - Rp1.000.000')
             return
@@ -162,23 +281,29 @@
         const payload = {
             top_up_amount: nominalInput.val(),
         }
-        loadingModal.modal("toggle")
+        confirmText.hide()
+        loading.removeClass("d-none")
         $.post({
             url: "/transaction/topup",
             data: JSON.stringify(payload),
             contentType: "application/json",
             success: function (response) {
-                setTimeout(function () {
-                    loadingModal.modal("toggle")
-                }, 1000)
+                confirmText.show()
+                loading.addClass("d-none")
+                confirmModal.modal("toggle")
+                successModal.modal("toggle")
             },
             error: function (xhr, status, error) {
                 console.error("Error:", error)
-                setTimeout(function () {
-                    loadingModal.modal("toggle")
-                }, 1000)
+                confirmText.show()
+                loading.addClass("d-none")
+                confirmModal.modal("toggle")
+                failModal.modal("toggle")
             }
         })
+    })
+    homeBtn.on("click", function () {
+        window.location.href = "/dashboard"
     })
 </script>
 <?= $this->endSection(); ?>
