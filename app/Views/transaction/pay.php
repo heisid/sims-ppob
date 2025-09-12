@@ -34,10 +34,9 @@
         margin-bottom: 30px;
     }
 
-    .btn-pay {
-        background-color: #dc3545;
-        border-color: #dc3545;
-        color: white;
+    .btn-red {
+        color: #dc3545;
+        background-color: white;
         font-weight: 500;
         padding: 12px 30px;
         font-size: 16px;
@@ -46,7 +45,7 @@
         margin-bottom: 15px;
     }
 
-    .btn-pay:hover {
+    .btn-red:hover {
         background-color: #c82333;
         border-color: #bd2130;
         color: white;
@@ -69,6 +68,7 @@
     .modal-content {
         border: none;
         border-radius: 12px;
+        min-height: 300px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         padding: 40px 30px;
     }
@@ -109,13 +109,42 @@
 <div class="modal fade" id="confirmModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
         <div class="modal-content" style="border: none; border-radius: 12px; padding: 40px 30px;">
-            <div class="logo-circle"></div>
-            <div class="modal-title">Beli <?= $service['service_name'] ?> senilai</div>
-            <div class="price-text">Rp<?= number_format($service['service_tariff'], 0, ',', '.') ?>?</div>
-            <div class="d-grid gap-2">
-                <button type="button" class="btn btn-pay">Ya, lanjutkan Bayar</button>
-                <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Batalkan</button>
+            <div class="payment-confirm">
+                <div class="logo-circle"></div>
+                <div class="modal-title">Beli <?= $service['service_name'] ?> senilai</div>
+                <div class="price-text">Rp<?= number_format($service['service_tariff'], 0, ',', '.') ?>?</div>
+                <div class="d-grid gap-2">
+                    <button type="button" id="btn-pay" class="btn btn-red">Ya, lanjutkan Bayar</button>
+                    <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Batalkan</button>
+                </div>
             </div>
+            <div class="loading d-flex flex-column justify-content-center align-items-center gap-3 d-none">
+                <div class="spinner-border" role="status"></div>
+                <p>Mohon Tunggu</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="successModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
+        <div class="modal-content" style="border: none; border-radius: 12px; padding: 40px 30px;">
+            <div class="logo-circle"></div>
+            <div class="modal-title">Pembayaran <?= $service['service_name'] ?> sebesar</div>
+            <div class="price-text">Rp<?= number_format($service['service_tariff'], 0, ',', '.') ?></div>
+            <div class="modal-title">berhasil</div>
+            <div class="d-grid gap-2">
+                <button type="button" id="btn-home" class="btn btn-red">Kembali Ke Beranda</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="failModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
+        <div class="modal-content" style="border: none; border-radius: 12px; padding: 40px 30px;">
+            <div class="modal-title">Pembayaran Gagal</div>
+            <button type="button" class="btn btn-red" data-bs-dismiss="modal">Ok</button>
         </div>
     </div>
 </div>
@@ -124,4 +153,35 @@
 
 <?= $this->section('js'); ?>
 <?= $this->include('partials/profile_balance_js') ?>
+<script>
+    $(document).ready(function () {
+        $("#btn-pay").on("click", function () {
+            const payload = {
+                service_code: "<?= $service['service_code'] ?>",
+            }
+            $(".loading").removeClass("d-none")
+            $(".payment-confirm").hide()
+            $.ajax({
+                url: "/transaction/pay",
+                type: "POST",
+                data: JSON.stringify(payload),
+                contentType: "application/json",
+                success: function (response) {
+                    $(".loading").addClass("d-none")
+                    $(".payment-confirm").show()
+                    $("#confirmModal").modal("toggle")
+                    $("#successModal").modal("toggle")
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error:", error)
+                    $(".loading").hide()
+                    $("#failModal").modal("toggle")
+                }
+            })
+        })
+        $("#btn-home").on("click", function () {
+            window.location.href = "/dashboard"
+        })
+    })
+</script>
 <?= $this->endSection(); ?>

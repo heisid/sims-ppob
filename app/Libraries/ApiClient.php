@@ -114,6 +114,11 @@ class ApiClient
         return $this->makeRequest('POST', '/topup', ['amount' => $amount], true);
     }
 
+    public function pay($serviceCode)
+    {
+        return $this->makeRequest('POST', '/transaction', ['service_code' => $serviceCode], true);
+    }
+
     public function getTransactions($page = 1, $limit = 10)
     {
         return $this->makeRequest('GET', "/transaction/history?page={$page}&limit={$limit}", [], true);

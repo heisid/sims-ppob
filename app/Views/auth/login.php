@@ -74,7 +74,6 @@
             if (!email) return showError("Email tidak boleh kosong!");
             if (!emailRegex.test(email)) return showError("Format email tidak valid!");
             if (!password) return showError("Password tidak boleh kosong!");
-            if (password.length < 6) return showError("Password minimal 6 karakter!");
 
             this.submit();
         });

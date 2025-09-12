@@ -60,4 +60,14 @@ class Transaction extends BaseController
 
         return view('transaction/pay', $data);
     }
+
+    public function doPay()
+    {
+        $json = $this->request->getJSON(true);
+
+        $serviceCode = $json['service_code'] ?? null;
+
+        $paymentResponnse = $this->apiClient->pay($serviceCode);
+        return $this->response->setJSON($paymentResponnse);
+    }
 }
