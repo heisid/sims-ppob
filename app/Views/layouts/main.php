@@ -17,6 +17,11 @@
             color: #333 !important;
         }
 
+        .navbar-nav .nav-link.active {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
         .logo {
             width: 24px;
             height: 24px;
@@ -40,9 +45,9 @@
             SIMS PPOB
         </a>
         <div class="navbar-nav ms-auto">
-            <a class="nav-link" href="/transaction/topup">Top Up</a>
-            <a class="nav-link" href="/transaction">Transaction</a>
-            <a class="nav-link" href="/profile">Akun</a>
+            <a class="nav-link <?= uri_string() == 'transaction/topup' ? 'active' : '' ?>" href="/transaction/topup">Top Up</a>
+            <a class="nav-link <?= uri_string() == 'transaction' ? 'active' : '' ?>" href="/transaction">Transaction</a>
+            <a class="nav-link <?= uri_string() == 'profile' ? 'active' : '' ?>" href="/profile">Akun</a>
         </div>
     </div>
 </nav>

@@ -199,6 +199,7 @@
             $(this).text("Logout")
             editBtn.text("Edit Profil")
             editableInput.prop("readonly", true)
+            editPropicBtn.hide()
         }
     })
 
