@@ -100,7 +100,7 @@
             <button id="edit-propic" class="btn btn-light btn-sm rounded-circle edit-icon" style="display: none">
                 <i class="fas fa-pencil-alt" style="font-size: 10px"></i>
             </button>
-            <input type="file" id="profile-image-input" accept="image/*" style="display:none;"/>
+            <input type="file" id="profile-image-input" accept="image/jpeg, image/png" style="display:none;"/>
         </div>
     </div>
 
@@ -233,6 +233,10 @@
                 }
             })
         }
+    })
+
+    profileImg.on("error", function () {
+        $(this).attr("src", "/img/Profile Photo.png")
     })
 
 </script>
