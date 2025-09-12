@@ -15,11 +15,9 @@ class Profile extends BaseController
 
     public function index()
     {
-        $response = $this->apiClient->getProfile();
+        $profileResponse = $this->apiClient->getProfile();
 
-        $data = [
-            'profile' => $response['success'] ? $response['data'] : null
-        ];
+        $data = $profileResponse['data']['data'] ?? array();
 
         return view('profile/view', $data);
     }

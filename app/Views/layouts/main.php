@@ -42,7 +42,7 @@
         <div class="navbar-nav ms-auto">
             <a class="nav-link" href="#">Top Up</a>
             <a class="nav-link" href="#">Transaction</a>
-            <a class="nav-link" href="#">Akun</a>
+            <a class="nav-link" href="<?= base_url('profile') ?>">Akun</a>
         </div>
     </div>
 </nav>
