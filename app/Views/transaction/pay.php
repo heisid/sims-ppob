@@ -177,6 +177,7 @@
             const amountToPay = <?= $service['service_tariff'] ?? 0 ?>;
             if (amountToPay > currentBalance) {
                 showError("Saldo tidak mencukupi")
+                confirmModal.modal("toggle")
                 return
             }
             const payload = {

@@ -57,7 +57,7 @@ class Profile extends BaseController
                 ->setJSON(['message' => 'Invalid file type. Only JPEG, PNG are allowed.']);
         }
 
-        if ($file->getSize() > 100 * 1024) {
+        if ($file->getSize() > env('MAX_FILE_SIZE_IN_KB', 100) * 1024) {
             return $this->response
                 ->setStatusCode(400)
                 ->setJSON(['message' => 'Maximum file size allowed is 100 kb.']);

@@ -159,6 +159,7 @@
     const firstNameInput = $("#firstName")
     const editPropicBtn = $("#edit-propic")
     const profileImageInput = $("#profile-image-input")
+    const MAX_FILE_SIZE = <?= env('MAX_FILE_SIZE_IN_KB', 100) ?>
 
     editBtn.on("click", function() {
         if ($(this).text().trim() === "Edit Profil") {
@@ -213,7 +214,7 @@
                 return
             }
 
-            if (file.size > 100 * 1024) {
+            if (file.size > MAX_FILE_SIZE * 1024) {
                 showError('Ukuran foto maksimum 100kb')
                 return
             }
