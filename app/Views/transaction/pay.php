@@ -129,7 +129,9 @@
 <div class="modal fade" id="successModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
         <div class="modal-content" style="border: none; border-radius: 12px; padding: 40px 30px;">
-            <div class="logo-circle"></div>
+            <div style="display: flex; align-items: center; justify-content: center; font-size: 3em; color: green; padding-bottom: 20px;">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
             <div class="modal-title">Pembayaran <?= $service['service_name'] ?> sebesar</div>
             <div class="price-text">Rp<?= number_format($service['service_tariff'], 0, ',', '.') ?></div>
             <div class="modal-title">berhasil</div>
@@ -143,8 +145,15 @@
 <div class="modal fade" id="failModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
         <div class="modal-content" style="border: none; border-radius: 12px; padding: 40px 30px;">
-            <div class="modal-title">Pembayaran Gagal</div>
-            <button type="button" class="btn btn-red" data-bs-dismiss="modal">Ok</button>
+            <div style="display: flex; align-items: center; justify-content: center; font-size: 3em; color: red; padding-bottom: 20px;">
+                <i class="fa-solid fa-circle-xmark"></i>
+            </div>
+            <div class="modal-title">Pembayaran <?= $service['service_name'] ?> sebesar</div>
+            <div class="price-text">Rp<?= number_format($service['service_tariff'], 0, ',', '.') ?></div>
+            <div class="modal-title">gagal</div>
+            <div class="d-grid gap-2">
+                <button type="button" id="btn-home" class="btn btn-red">Kembali Ke Beranda</button>
+            </div>
         </div>
     </div>
 </div>
@@ -174,7 +183,9 @@
                 },
                 error: function (xhr, status, error) {
                     console.error("Error:", error)
-                    $(".loading").hide()
+                    $(".loading").addClass("d-none")
+                    $(".payment-confirm").show()
+                    $("#confirmModal").modal("toggle")
                     $("#failModal").modal("toggle")
                 }
             })

@@ -67,7 +67,10 @@ class Transaction extends BaseController
 
         $serviceCode = $json['service_code'] ?? null;
 
-        $paymentResponnse = $this->apiClient->pay($serviceCode);
-        return $this->response->setJSON($paymentResponnse);
+        $paymentResponse = $this->apiClient->pay($serviceCode);
+        if ($paymentResponse['success']) {
+            return $this->response->setJSON($paymentResponse);
+        }
+        return $this->response->setStatusCode($paymentResponse['http_code']);
     }
 }
