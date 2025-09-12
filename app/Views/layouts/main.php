@@ -51,7 +51,7 @@
 </div>
 
 <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x mb-3">
-    <div id="errorToast" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div id="toast-notif" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
             <div class="toast-body"></div>
             <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -64,14 +64,30 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    const $toastEl = $("#errorToast")
-    const toast = new bootstrap.Toast($toastEl[0], { delay: 4000 })
-    const $toastBody = $toastEl.find(".toast-body")
+    let showError
+    let showSuccess
+    $(document).ready(function () {
+        const toastEl = $("#toast-notif")
+        const toast = new bootstrap.Toast(toastEl[0], { delay: 4000 })
+        const toastBody = toastEl.find(".toast-body")
 
-    function showError(message) {
-        $toastBody.text(message)
-        toast.show()
-    }
+        showError = (message) => {
+            toastEl.removeClass("bg-success").addClass("bg-danger")
+            toastBody.text(message)
+            toast.show()
+        }
+
+        showSuccess = (message) => {
+            toastEl.removeClass("bg-danger").addClass("bg-success")
+            toastBody.text(message)
+            toast.show()
+        }
+
+        const flashError = <?= "'".session()->getFlashdata('error')."'" ?? 'null' ?>;
+        const flashSuccess = <?= "'".session()->getFlashdata('success')."'" ?? 'null' ?>;
+        if (flashError) showError(flashError)
+        if (flashSuccess) showSuccess(flashSuccess)
+    })
 </script>
 <?= $this->renderSection('js') ?>
 </body>

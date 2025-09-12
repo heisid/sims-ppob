@@ -19,10 +19,8 @@
 <body>
 <div class="container-fluid vh-100 p-0">
     <div class="row h-100 g-0">
-        <!-- Left side - Login Form -->
         <div class="col-md-6 d-flex align-items-center justify-content-center" style="background-color: #ffffff;">
             <div class="w-100" style="max-width: 400px; padding: 0 2rem;">
-                <!-- Logo and Title -->
                 <div class="text-center mb-4">
                     <div class="d-flex align-items-center justify-content-center mb-3">
                         <img src="<?= base_url('img/Logo.png') ?>" alt="SIMS PPOB Logo" width="32" height="32" class="me-2">
@@ -40,14 +38,12 @@
             </div>
         </div>
 
-        <!-- Right side - Illustration -->
         <div class="col-md-6 d-flex align-items-center justify-content-center right-side">
         </div>
     </div>
 
-    <!-- Error Toast -->
     <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x mb-3">
-        <div id="errorToast" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div id="toast-notif" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
                 <div class="toast-body"></div>
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -59,6 +55,32 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/321a7ce62f.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    let showError
+    let showSuccess
+    $(document).ready(function () {
+        const toastEl = $("#toast-notif")
+        const toast = new bootstrap.Toast(toastEl[0], { delay: 4000 })
+        const toastBody = toastEl.find(".toast-body")
+
+        showError = (message) => {
+            toastEl.removeClass("bg-success").addClass("bg-danger")
+            toastBody.text(message)
+            toast.show()
+        }
+
+        showSuccess = (message) => {
+            toastEl.removeClass("bg-danger").addClass("bg-success")
+            toastBody.text(message)
+            toast.show()
+        }
+
+        const flashError = <?= "'".session()->getFlashdata('error')."'" ?? 'null' ?>;
+        const flashSuccess = <?= "'".session()->getFlashdata('success')."'" ?? 'null' ?>;
+        if (flashError) showError(flashError)
+        if (flashSuccess) showSuccess(flashSuccess)
+    })
+</script>
 <?= $this->renderSection('js'); ?>
 </body>
 </html>

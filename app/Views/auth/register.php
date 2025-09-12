@@ -1,7 +1,6 @@
 <?= $this->extend('layouts/auth'); ?>
 <?= $this->section('content'); ?>
-<form id="registerForm">
-    <!-- Email Input -->
+<form id="registerForm" method="post">
     <div class="mb-3">
         <div class="input-group">
             <span class="input-group-text bg-white border-end-0" style="border-color: #dee2e6;">
@@ -10,6 +9,7 @@
             <input
                 type="email"
                 id="emailInput"
+                name="email"
                 class="form-control border-start-0"
                 placeholder="masukan email anda"
                 style="border-color: #dee2e6;"
@@ -17,7 +17,6 @@
         </div>
     </div>
 
-    <!--First Name-->
     <div class="mb-3">
         <div class="input-group">
             <span class="input-group-text bg-white border-end-0" style="border-color: #dee2e6;">
@@ -26,6 +25,7 @@
             <input
                 type="text"
                 id="firstNameInput"
+                name="first_name"
                 class="form-control border-start-0"
                 placeholder="nama depan"
                 style="border-color: #dee2e6;"
@@ -33,7 +33,6 @@
         </div>
     </div>
 
-    <!--Last Name-->
     <div class="mb-3">
         <div class="input-group">
             <span class="input-group-text bg-white border-end-0" style="border-color: #dee2e6;">
@@ -42,6 +41,7 @@
             <input
                 type="text"
                 id="lastNameInput"
+                name="last_name"
                 class="form-control border-start-0"
                 placeholder="nama belakang"
                 style="border-color: #dee2e6;"
@@ -49,7 +49,6 @@
         </div>
     </div>
 
-    <!-- Password Input -->
     <div class="mb-3">
         <div class="input-group" id="passwordGroup">
             <span class="input-group-text bg-white border-end-0" id="passwordIcon" style="border-color: #dee2e6;">
@@ -58,6 +57,7 @@
             <input
                 type="password"
                 id="passwordInput"
+                name="password"
                 class="form-control border-start-0 border-end-0"
                 placeholder="buat password"
                 style="border-color: #dee2e6;"
@@ -68,7 +68,6 @@
         </div>
     </div>
 
-    <!--Confirm Password-->
     <div class="mb-3">
         <div class="input-group" id="passwordGroup">
             <span class="input-group-text bg-white border-end-0" id="passwordIcon" style="border-color: #dee2e6;">
@@ -95,7 +94,6 @@
         Registrasi
     </button>
 
-    <!-- Login Link -->
     <p class="text-center mb-0" style="color: #666666; font-size: 0.9rem;">
         sudah punya akun? login
         <a href="/auth/login" style="color: #dc3545; text-decoration: none;">di sini</a>
@@ -106,25 +104,21 @@
 <?= $this->section('js'); ?>
 <script>
     $(function () {
-        const $form = $("#registerForm");
-        const $email = $("#emailInput");
-        const $firstName = $("#firstNameInput");
-        const $lastName = $("#lastNameInput");
-        const $password = $("#passwordInput");
-        const $confirmPassword = $("#confirmPasswordInput");
+        const form = $("#registerForm")
+        const emailInput = $("#emailInput")
+        const firstNameInput = $("#firstNameInput")
+        const lastNameInput = $("#lastNameInput")
+        const passwordInput = $("#passwordInput")
+        const confirmPasswordInput = $("#confirmPasswordInput")
 
-        const $toastEl = $("#errorToast");
-        const toast = new bootstrap.Toast($toastEl[0], { delay: 4000 });
-        const $toastBody = $toastEl.find(".toast-body");
-
-        $form.on("submit", function (e) {
+        form.on("submit", function (e) {
             e.preventDefault();
 
-            const email = $.trim($email.val());
-            const firstName = $.trim($firstName.val());
-            const lastName = $.trim($lastName.val());
-            const password = $.trim($password.val());
-            const confirmPassword = $.trim($confirmPassword.val());
+            const email = $.trim(emailInput.val());
+            const firstName = $.trim(firstNameInput.val());
+            const lastName = $.trim(lastNameInput.val());
+            const password = $.trim(passwordInput.val());
+            const confirmPassword = $.trim(confirmPasswordInput.val());
 
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -133,34 +127,29 @@
             if (!firstName) return showError("Nama depan tidak boleh kosong!");
             if (!lastName) return showError("Nama belakang tidak boleh kosong!");
             if (!password) return showError("Password tidak boleh kosong!");
-            if (password.length < 6) return showError("Password minimal 6 karakter!");
+            if (password.length < 8) return showError("Password minimal 8 karakter!");
             if (!confirmPassword) return showError("Konfirmasi password tidak boleh kosong!");
             if (password !== confirmPassword) return showError("Password dan konfirmasi tidak sama!");
 
             this.submit();
-        });
-
-        function showError(message) {
-            $toastBody.text(message);
-            toast.show();
-        }
+        })
 
         $("#togglePassword").on("click", function () {
-            if ($password.attr("type") === "password") {
-                $password.attr("type", "text");
+            if (passwordInput.attr("type") === "password") {
+                passwordInput.attr("type", "text");
                 $(this).find("#eyeIcon").html('<i class="fa-regular fa-eye-slash"></i>');
             } else {
-                $password.attr("type", "password");
+                passwordInput.attr("type", "password");
                 $(this).find("#eyeIcon").html('<i class="fa-regular fa-eye"></i>');
             }
         });
 
         $("#toggleConfirmPassword").on("click", function () {
-            if ($confirmPassword.attr("type") === "password") {
-                $confirmPassword.attr("type", "text");
+            if (confirmPasswordInput.attr("type") === "password") {
+                confirmPasswordInput.attr("type", "text");
                 $(this).find("#eyeIcon").html('<i class="fa-regular fa-eye-slash"></i>');
             } else {
-                $confirmPassword.attr("type", "password");
+                confirmPasswordInput.attr("type", "password");
                 $(this).find("#eyeIcon").html('<i class="fa-regular fa-eye"></i>');
             }
         });

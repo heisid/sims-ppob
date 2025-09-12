@@ -70,21 +70,22 @@ class Auth extends BaseController
     public function doRegister()
     {
         $data = [
-            'name' => $this->request->getPost('name'),
+            'first_name' => $this->request->getPost('first_name'),
+            'last_name' => $this->request->getPost('last_name'),
             'email' => $this->request->getPost('email'),
             'password' => $this->request->getPost('password'),
-            'password_confirmation' => $this->request->getPost('password_confirmation')
         ];
+
 
         $response = $this->apiClient->register($data);
 
         if ($response['success']) {
             return redirect()->to('/auth/login')
-                ->with('success', 'Registration successful. Please login.');
+                ->with('success', 'Registrasi berhasil. Silahkan login');
         } else {
             return redirect()->back()
                 ->withInput()
-                ->with('error', $response['data']['message'] ?? 'Registration failed');
+                ->with('error', $response['data']['message'] ?? 'Registrasi gagal');
         }
     }
 
