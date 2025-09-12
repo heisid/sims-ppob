@@ -56,8 +56,8 @@
             <div class="transaction-item">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
-                        <div class="<?= $transaction['total_amount'] > 0 ? 'amount-positive' : 'amount-negative' ?>">
-                            <?= $transaction['total_amount'] >= 0 ? '+' : '-' ?>
+                        <div class="<?= $transaction['transaction_type'] == 'TOPUP' ? 'amount-positive' : 'amount-negative' ?>">
+                            <?= $transaction['transaction_type'] == 'TOPUP' ? '+' : '-' ?>
                             Rp.<?= number_format($transaction['total_amount'], 0, ',', '.') ?>
                         </div>
                         <div class="transaction-date"><?= $transaction['created_on'] ?></div>
@@ -90,8 +90,8 @@
                     <div class="transaction-item">
                         <div class="d-flex justify-content-between align-items-start">
                             <div>
-                                <div class="${row.total_amount > 0 ? 'amount-positive' : 'amount-negative'}">
-                                    ${row.total_amount >= 0 ? '+' : '-'}
+                                <div class="${row.transaction_type === 'TOPUP' ? 'amount-positive' : 'amount-negative'}">
+                                    ${row.transaction_type === 'TOPUP' ? '+' : '-'}
                                     Rp.${row.total_amount.toLocaleString('id-ID')}
                                 </div>
                                 <div class="transaction-date">${row.created_on}</div>

@@ -34,7 +34,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="#">
+        <a class="navbar-brand d-flex align-items-center" href="/">
             <img src="<?= base_url('/img/Logo.png') ?>" alt="Logo" class="logo">
             SIMS PPOB
         </a>
