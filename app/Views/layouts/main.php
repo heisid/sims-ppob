@@ -50,10 +50,29 @@
     <?= $this->renderSection('content'); ?>
 </div>
 
+<div class="toast-container position-fixed bottom-0 start-50 translate-middle-x mb-3">
+    <div id="errorToast" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/321a7ce62f.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+<script>
+    const $toastEl = $("#errorToast")
+    const toast = new bootstrap.Toast($toastEl[0], { delay: 4000 })
+    const $toastBody = $toastEl.find(".toast-body")
+
+    function showError(message) {
+        $toastBody.text(message)
+        toast.show()
+    }
+</script>
 <?= $this->renderSection('js') ?>
 </body>
 </html>

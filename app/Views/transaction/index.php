@@ -81,7 +81,7 @@
 <script>
     let offset = 0
     $(".show-more").on("click", function () {
-        $.ajax({
+        $.get({
             url: `/transaction/${++offset}`,
             contentType: "application/json",
             success: function (response) {

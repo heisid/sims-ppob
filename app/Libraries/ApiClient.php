@@ -111,7 +111,7 @@ class ApiClient
 
     public function topUp($amount)
     {
-        return $this->makeRequest('POST', '/topup', ['amount' => $amount], true);
+        return $this->makeRequest('POST', '/topup', ['top_up_amount' => $amount], true);
     }
 
     public function pay($serviceCode)

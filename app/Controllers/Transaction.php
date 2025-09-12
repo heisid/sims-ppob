@@ -25,9 +25,6 @@ class Transaction extends BaseController
             $data['transactions'] = $transactions;
         } else $data['transactions'] = [];
 
-        $data['profile'] = session()->get('profile');
-        $data['balance'] = session()->get('balance');
-
         return view('transaction/index', $data);
     }
 
@@ -68,9 +65,6 @@ class Transaction extends BaseController
 
         if (count($data) == 0) return redirect('/dashboard')->with('errors', 'Kode pembayaran tidak valid');
 
-        $data['profile'] = session()->get('profile');
-        $data['balance'] = session()->get('balance');
-
         return view('transaction/pay', $data);
     }
 
@@ -84,8 +78,29 @@ class Transaction extends BaseController
         if ($paymentResponse['success']) {
             $balanceResponse = $this->apiClient->getBalance();
             if ($balanceResponse['success']) session()->set(['balance' => $balanceResponse['data']['data']['balance']]);
-            return $this->response->setJSON($paymentResponse);
+            return $this->response->setJSON(['message' => $paymentResponse['data']['message']]);
+
         }
         return $this->response->setStatusCode($paymentResponse['http_code']);
+    }
+
+    public function topup()
+    {
+        return view('transaction/topup');
+    }
+
+    public function doTopup()
+    {
+        $json = $this->request->getJSON(true);
+        $amount = $json['top_up_amount'] ?? 0;
+        if (is_null($amount)) return $this->response->setStatusCode(400)->setJSON([]);
+
+        $response = $this->apiClient->topUp($amount);
+        if ($response['success']) {
+            $balanceResponse = $this->apiClient->getBalance();
+            if ($balanceResponse['success']) session()->set(['balance' => $balanceResponse['data']['data']['balance']]);
+            return $this->response->setJSON(['message' => $response['data']['message']]);
+        }
+        return $this->response->setStatusCode($response['http_code']);
     }
 }
