@@ -178,8 +178,9 @@
             }
             loading.removeClass("d-none")
             paymentConfirm.hide()
-            $.post({
+            $.ajax({
                 url: "/transaction/pay",
+                type: "POST",
                 data: JSON.stringify(payload),
                 contentType: "application/json",
                 success: function (response) {

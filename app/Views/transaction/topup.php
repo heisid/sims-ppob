@@ -283,8 +283,9 @@
         }
         confirmText.hide()
         loading.removeClass("d-none")
-        $.post({
+        $.ajax({
             url: "/transaction/topup",
+            type: "POST",
             data: JSON.stringify(payload),
             contentType: "application/json",
             success: function (response) {

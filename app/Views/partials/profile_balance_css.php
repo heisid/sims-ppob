@@ -1,27 +1,28 @@
 <style>
     .balance-card {
-        background: linear-gradient(135deg, #ff4757, #ff3742);
-        border-radius: 20px;
-        color: white;
+        background-image: url(<?= base_url('img/Background Saldo.png') ?>);
+        background-size: cover;
+        height: 100%;
         padding: 30px;
+        border-radius: 10px;
+        color: white;
         position: relative;
         overflow: hidden;
-    }
-
-    .balance-card::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -20%;
-        width: 200px;
-        height: 200px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
     }
 
     .balance-amount {
         font-size: 2rem;
         font-weight: bold;
         letter-spacing: 2px;
+    }
+
+    .user-avatar {
+        width: 100%;
+        max-width: 100px;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid #e9ecef;
     }
 </style>
