@@ -15,14 +15,17 @@ class ApiClient
         $this->session = session();
     }
 
-    private function makeRequest($method, $endpoint, $data = [], $requireAuth = false)
+    private function makeRequest($method, $endpoint, $data = [], $requireAuth = false, $isFileUpload = false)
     {
         $curl = curl_init();
 
         $headers = [
-            'Content-Type: application/json',
             'Accept: application/json',
         ];
+
+        if (!$isFileUpload) {
+            $headers[] = 'Content-Type: application/json';
+        }
 
         if ($requireAuth && $this->session->get('token')) {
             $headers[] = 'Authorization: Bearer ' . $this->session->get('token');
@@ -39,11 +42,19 @@ class ApiClient
         switch (strtoupper($method)) {
             case 'POST':
                 $options[CURLOPT_POST] = true;
-                $options[CURLOPT_POSTFIELDS] = json_encode($data);
+                if ($isFileUpload) {
+                    $options[CURLOPT_POSTFIELDS] = $data;
+                } else {
+                    $options[CURLOPT_POSTFIELDS] = json_encode($data);
+                }
                 break;
             case 'PUT':
                 $options[CURLOPT_CUSTOMREQUEST] = 'PUT';
-                $options[CURLOPT_POSTFIELDS] = json_encode($data);
+                if ($isFileUpload) {
+                    $options[CURLOPT_POSTFIELDS] = $data;
+                } else {
+                    $options[CURLOPT_POSTFIELDS] = json_encode($data);
+                }
                 break;
             case 'DELETE':
                 $options[CURLOPT_CUSTOMREQUEST] = 'DELETE';
@@ -109,6 +120,22 @@ class ApiClient
         return $this->makeRequest('PUT', '/profile/update', $data, true);
     }
 
+
+    public function updateImage($uploadedFile)
+    {
+        $tempPath = $uploadedFile->getTempName();
+
+        $curlFile = new \CURLFile(
+            $tempPath,
+            $uploadedFile->getMimeType(),
+            $uploadedFile->getClientName()
+        );
+
+        $data = ['file' => $curlFile];
+
+        return $this->makeRequest('PUT', '/profile/image', $data, true, true);
+    }
+
     public function topUp($amount)
     {
         return $this->makeRequest('POST', '/topup', ['top_up_amount' => $amount], true);
@@ -122,10 +149,5 @@ class ApiClient
     public function getTransactions($offset = 0, $limit = 5)
     {
         return $this->makeRequest('GET', "/transaction/history?offset={$offset}&limit={$limit}", [], true);
-    }
-
-    public function getTransactionDetail($id)
-    {
-        return $this->makeRequest('GET', "/transactions/{$id}", [], true);
     }
 }

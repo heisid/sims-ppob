@@ -92,14 +92,15 @@
     <div class="text-center mb-4">
         <div class="position-relative d-inline-block">
             <img
-                    id="profile-img"
-                    src="<?= $profile_image ?>"
-                    alt="Profile"
-                    class="rounded-circle profile-image"
+                id="profile-img"
+                src="<?= $profile_image ?>"
+                alt="Profile"
+                class="rounded-circle profile-image"
             />
-            <button class="btn btn-light btn-sm rounded-circle edit-icon">
+            <button id="edit-propic" class="btn btn-light btn-sm rounded-circle edit-icon" style="display: none">
                 <i class="fas fa-pencil-alt" style="font-size: 10px"></i>
             </button>
+            <input type="file" id="profile-image-input" accept="image/*" style="display:none;"/>
         </div>
     </div>
 
@@ -155,13 +156,21 @@
     const form = $("#profile-form")
     const profileImg = $("#profile-img")
     const profileName = $("#profile-name")
+    const firstNameInput = $("#firstName")
+    const editPropicBtn = $("#edit-propic")
+    const profileImageInput = $("#profile-image-input")
 
     editBtn.on("click", function() {
         if ($(this).text().trim() === "Edit Profil") {
             editableInput.prop("readonly", false)
             $(this).text("Simpan")
             logoutCancelBtn.text("Batalkan")
+            editPropicBtn.show()
         } else {
+            if (firstNameInput.val().trim() === "") {
+                showError("Nama depan harus diisi")
+                return
+            }
             $.ajax({
                 url: "/profile",
                 type: "POST",
@@ -172,6 +181,7 @@
                     editBtn.text("Edit Profil")
                     editableInput.prop("readonly", true)
                     logoutCancelBtn.text("Logout")
+                    editPropicBtn.hide()
                 },
                 error: function (xhr, status, error) {
                     console.error("Error:", error)
@@ -188,5 +198,42 @@
             editableInput.prop("readonly", true)
         }
     })
+
+    editPropicBtn.on("click", function() {
+        profileImageInput.click()
+    })
+
+    profileImageInput.on("change", function() {
+        const file = this.files[0]
+        if (file) {
+            if (!file.type.startsWith('image/')) {
+                showError('File tidak valid')
+                return
+            }
+
+            if (file.size > 100 * 1024) {
+                showError('Ukuran foto maksimum 100kb')
+                return
+            }
+
+            const formData = new FormData()
+            formData.append('profile_image', file)
+
+            $.ajax({
+                url: "/profile/image",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    profileImg.attr("src", response.profile_image)
+                },
+                error: function (xhr, status, error) {
+                    console.error("Upload error:", error)
+                }
+            })
+        }
+    })
+
 </script>
 <?= $this->endSection(); ?>

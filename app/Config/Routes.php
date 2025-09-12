@@ -20,6 +20,7 @@ $routes->group('auth', function($routes) {
 $routes->group('profile', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'Profile::index');
     $routes->post('/', 'Profile::update');
+    $routes->post('image', 'Profile::updateImage');
 });
 
 $routes->group('transaction', ['filter' => 'auth'], function($routes) {
