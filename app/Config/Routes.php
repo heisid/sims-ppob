@@ -30,4 +30,5 @@ $routes->group('transaction', ['filter' => 'auth'], function($routes) {
     $routes->post('pay', 'Transaction::doPay');
     $routes->get('topup', 'Transaction::topup');
     $routes->post('topup', 'Transaction::doTopup');
+    $routes->get('/fetch-balance', 'Transaction::fetchBalance');
 });

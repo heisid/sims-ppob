@@ -293,6 +293,7 @@
                 loading.addClass("d-none")
                 confirmModal.modal("toggle")
                 successModal.modal("toggle")
+                updateBalanceHeader(response.balance)
             },
             error: function (xhr, status, error) {
                 console.error("Error:", error)

@@ -76,9 +76,8 @@ class Transaction extends BaseController
 
         $paymentResponse = $this->apiClient->pay($serviceCode);
         if ($paymentResponse['success']) {
-            $balanceResponse = $this->apiClient->getBalance();
-            if ($balanceResponse['success']) session()->set(['balance' => $balanceResponse['data']['data']['balance']]);
-            return $this->response->setJSON(['message' => $paymentResponse['data']['message']]);
+            $updatedBalance = $this->getBalance();
+            return $this->response->setJSON(['message' => $paymentResponse['data']['message'], 'balance' => $updatedBalance]);
 
         }
         return $this->response->setStatusCode($paymentResponse['http_code']);
@@ -97,10 +96,26 @@ class Transaction extends BaseController
 
         $response = $this->apiClient->topUp($amount);
         if ($response['success']) {
-            $balanceResponse = $this->apiClient->getBalance();
-            if ($balanceResponse['success']) session()->set(['balance' => $balanceResponse['data']['data']['balance']]);
-            return $this->response->setJSON(['message' => $response['data']['message']]);
+            $currentBalance = $this->getBalance();
+            return $this->response->setJSON(['message' => $response['data']['message'], 'balance' => $currentBalance]);
         }
         return $this->response->setStatusCode($response['http_code']);
+    }
+
+    private function getBalance()
+    {
+        $response = $this->apiClient->getBalance();
+        if ($response['success']) {
+            $updatedBalance = $response['data']['data']['balance'];
+            session()->set(['balance' => $updatedBalance]);
+            return $updatedBalance;
+        }
+        return session()->get('balance');
+    }
+
+    public function fetchBalance()
+    {
+        $balance = $this->getBalance();
+        return $this->response->setJSON(['balance' => $balance]);
     }
 }

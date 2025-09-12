@@ -173,6 +173,12 @@
         const homeBtn = $(".btn-home")
 
         payBtn.on("click", function () {
+            const currentBalance = <?= session()->get('balance') ?? 0 ?>;
+            const amountToPay = <?= $service['service_tariff'] ?? 0 ?>;
+            if (amountToPay > currentBalance) {
+                showError("Saldo tidak mencukupi")
+                return
+            }
             const payload = {
                 service_code: "<?= $service['service_code'] ?>",
             }
@@ -188,6 +194,7 @@
                     paymentConfirm.show()
                     confirmModal.modal("toggle")
                     successModal.modal("toggle")
+                    updateBalanceHeader(response.balance)
                 },
                 error: function (xhr, status, error) {
                     console.error("Error:", error)
