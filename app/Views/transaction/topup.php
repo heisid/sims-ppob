@@ -157,6 +157,7 @@
 
 <?= $this->section('content'); ?>
 <?= $this->include('partials/profile_balance') ?>
+<?= csrf_field(); ?>
 <div class="container-custom">
     <div class="page-title">Silahkan masukan</div>
     <h1 class="main-title">Nominal Top Up</h1>
@@ -255,6 +256,7 @@
     const failModal = $("#failModal")
     const homeBtn = $(".btn-home")
     const nominalText = $(".nominal-text")
+    const csrfToken = $('input[name="csrf"]').val()
 
     amountBtn.on("click", function () {
         const amount = $(this).data("amount")
@@ -286,6 +288,9 @@
         $.ajax({
             url: "/transaction/topup",
             type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
             data: JSON.stringify(payload),
             contentType: "application/json",
             success: function (response) {
