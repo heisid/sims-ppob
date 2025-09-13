@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Helpers\Helper;
 use App\Libraries\ApiClient;
 
 class Auth extends BaseController
@@ -40,6 +41,9 @@ class Auth extends BaseController
 
             $profileResponse = $this->apiClient->getProfile();
             $profile = $profileResponse['data']['data'] ?? array();
+            if ($profile['profile_image']) {
+                $profile['profile_image'] = base_url('/proxy-image').Helper::extractPath($profile['profile_image']);
+            }
 
             $balanceResponse = $this->apiClient->getBalance();
             $balance = $balanceResponse['data']['data']['balance'] ?? 0;

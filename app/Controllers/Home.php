@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Helpers\Helper;
+
 class Home extends BaseController
 {
     public function index()
@@ -18,10 +20,18 @@ class Home extends BaseController
         $apiClient = new \App\Libraries\ApiClient();
 
         $servicesResponse = $apiClient->getServices();
-        $data['services'] = $servicesResponse['data']['data'] ?? array();
+        $services = $servicesResponse['data']['data'] ?? array();
+        foreach ($services as &$service) {
+            $service['service_icon'] = base_url('/proxy-image').Helper::extractPath($service['service_icon']);
+        }
+        $data['services'] = $services;
 
         $bannersResponse = $apiClient->getBanners();
-        $data['banners'] = $bannersResponse['data']['data'] ?? array();
+        $banners = $bannersResponse['data']['data'] ?? array();
+        foreach ($banners as &$banner) {
+            $banner['banner_image'] = base_url('/proxy-image').Helper::extractPath($banner['banner_image']);
+        }
+        $data['banners'] = $banners;
 
         return view('home/dashboard', $data);
     }

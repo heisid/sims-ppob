@@ -8,6 +8,7 @@ use CodeIgniter\Router\RouteCollection;
 
 $routes->get('/', 'Home::index');
 $routes->get('/dashboard', 'Home::dashboard', ['filter' => 'auth']);
+$routes->get('/proxy-image/(:any)', 'ImageProxy::proxy/$1');
 
 $routes->group('auth', function($routes) {
     $routes->get('login', 'Auth::login');
