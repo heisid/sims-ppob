@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,22 +15,49 @@
             background-size: cover;
             background-position: center;
         }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+            .form-container {
+                max-width: 100% !important;
+                padding: 0 1rem !important;
+            }
+            .logo-title {
+                font-size: 1.25rem !important;
+            }
+            .main-title {
+                font-size: 1.5rem !important;
+            }
+            .toast-container {
+                left: 1rem !important;
+                right: 1rem !important;
+                transform: none !important;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991.98px) {
+            .form-container {
+                max-width: 450px !important;
+            }
+        }
     </style>
 </head>
 <body>
 <div class="container-fluid vh-100 p-0">
     <div class="row h-100 g-0">
-        <div class="col-md-6 d-flex align-items-center justify-content-center" style="background-color: #ffffff;">
-            <div class="w-100" style="max-width: 400px; padding: 0 2rem;">
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center main-container" style="background-color: #ffffff;">
+            <div class="w-100 form-container" style="max-width: 400px; padding: 0 2rem;">
                 <div class="text-center mb-4">
                     <div class="d-flex align-items-center justify-content-center mb-3">
                         <img src="<?= base_url('img/Logo.png') ?>" alt="SIMS PPOB Logo" width="32" height="32" class="me-2">
-                        <h4 class="mb-0 fw-bold" style="color: #333333;">SIMS PPOB</h4>
+                        <h4 class="mb-0 fw-bold logo-title" style="color: #333333;">SIMS PPOB</h4>
                     </div>
-                    <h2 class="fw-bold mb-1" style="color: #333333; font-size: 1.75rem;">
+                    <h2 class="fw-bold mb-1 main-title" style="color: #333333; font-size: 1.75rem;">
                         Masuk atau buat akun
                     </h2>
-                    <h2 class="fw-bold" style="color: #333333; font-size: 1.75rem;">
+                    <h2 class="fw-bold main-title" style="color: #333333; font-size: 1.75rem;">
                         untuk memulai
                     </h2>
                 </div>
@@ -39,7 +66,7 @@
             </div>
         </div>
 
-        <div class="col-md-6 d-flex align-items-center justify-content-center right-side">
+        <div class="col-md-6 d-none d-md-flex align-items-center justify-content-center right-side">
         </div>
     </div>
 

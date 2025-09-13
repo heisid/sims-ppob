@@ -17,9 +17,18 @@
             color: #333 !important;
         }
 
+        .navbar-nav .nav-link {
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+        }
+
         .navbar-nav .nav-link.active {
-            color: #dc3545;
+            color: #dc3545 !important;
             font-weight: bold;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #dc3545 !important;
         }
 
         .logo {
@@ -34,6 +43,43 @@
             font-weight: 600;
             margin-bottom: 20px;
         }
+
+        .navbar-toggler {
+            border: none;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        @media (max-width: 992px) {
+            .navbar-nav {
+                text-align: center;
+                padding-top: 1rem;
+                border-top: 1px solid #dee2e6;
+                margin-top: 1rem;
+            }
+
+            .navbar-nav .nav-link {
+                padding: 0.75rem 1rem;
+                border-radius: 0.375rem;
+                margin: 0.25rem 0;
+            }
+
+            .navbar-nav .nav-link.active,
+            .navbar-nav .nav-link:hover {
+                background-color: #dc3545;
+                color: white !important;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .navbar-nav {
+                flex-direction: row;
+                gap: 0.5rem;
+            }
+        }
     </style>
     <?= $this->renderSection('css') ?>
 </head>
@@ -44,10 +90,17 @@
             <img src="<?= base_url('/img/Logo.png') ?>" alt="Logo" class="logo">
             SIMS PPOB
         </a>
-        <div class="navbar-nav ms-auto">
-            <a class="nav-link <?= uri_string() == 'transaction/topup' ? 'active' : '' ?>" href="/transaction/topup">Top Up</a>
-            <a class="nav-link <?= uri_string() == 'transaction' ? 'active' : '' ?>" href="/transaction">Transaction</a>
-            <a class="nav-link <?= uri_string() == 'profile' ? 'active' : '' ?>" href="/profile">Akun</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link <?= uri_string() == 'transaction/topup' ? 'active' : '' ?>" href="/transaction/topup">Top Up</a>
+                <a class="nav-link <?= uri_string() == 'transaction' ? 'active' : '' ?>" href="/transaction">Transaction</a>
+                <a class="nav-link <?= uri_string() == 'profile' ? 'active' : '' ?>" href="/profile">Akun</a>
+            </div>
         </div>
     </div>
 </nav>
@@ -93,6 +146,12 @@
         const flashSuccess = <?= "'".session()->getFlashdata('success')."'" ?? 'null' ?>;
         if (flashError) showError(flashError)
         if (flashSuccess) showSuccess(flashSuccess)
+
+        $('.navbar-nav .nav-link').on('click', function() {
+            if (window.innerWidth < 992) {
+                $('.navbar-collapse').collapse('hide')
+            }
+        })
     })
 </script>
 <?= $this->renderSection('js') ?>
