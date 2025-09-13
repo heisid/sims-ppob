@@ -88,6 +88,7 @@
 </style>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
+<?= csrf_field(); ?>
 <div class="profile-container">
     <div class="text-center mb-4">
         <div class="position-relative d-inline-block">
@@ -159,7 +160,8 @@
     const firstNameInput = $("#firstName")
     const editPropicBtn = $("#edit-propic")
     const profileImageInput = $("#profile-image-input")
-    const MAX_FILE_SIZE = <?= env('MAX_FILE_SIZE_IN_KB', 100) ?>
+    const MAX_FILE_SIZE = <?= env('MAX_FILE_SIZE_IN_KB', 100) ?>;
+    const csrfToken = $('input[name="csrf"]').val()
 
     editBtn.on("click", function() {
         if ($(this).text().trim() === "Edit Profil") {
@@ -175,6 +177,9 @@
             $.ajax({
                 url: "/profile",
                 type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
                 data: form.serialize(),
                 success: function (response) {
                     profileName.text(`${response.first_name} ${response.last_name}`)
@@ -226,6 +231,9 @@
             $.ajax({
                 url: "/profile/image",
                 type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
                 data: formData,
                 processData: false,
                 contentType: false,

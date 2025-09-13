@@ -77,6 +77,7 @@
 
 <?= $this->section('content'); ?>
 <?= $this->include('partials/profile_balance') ?>
+<?= csrf_field(); ?>
 <div class="mt-5">
     <h3 class="section-title">Pembayaran</h3>
     <h3 class="section-title"><img src="<?= $service['service_icon'] ?>" class="img-fluid mr-5" /><?= $service['service_name'] ?></h3>
@@ -171,6 +172,7 @@
         const successModal = $("#successModal")
         const failModal = $("#failModal")
         const homeBtn = $(".btn-home")
+        const csrfToken = $('input[name="csrf"]').val()
 
         payBtn.on("click", function () {
             const currentBalance = <?= session()->get('balance') ?? 0 ?>;
@@ -188,6 +190,9 @@
             $.ajax({
                 url: "/transaction/pay",
                 type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
                 data: JSON.stringify(payload),
                 contentType: "application/json",
                 success: function (response) {
