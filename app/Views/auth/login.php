@@ -54,15 +54,17 @@
 <?= $this->section('js'); ?>
 <script>
     $(function () {
-        const $loginForm = $("#loginForm")
-        const $emailInput = $("#emailInput")
-        const $passwordInput = $("#passwordInput")
+        const form = $("#loginForm")
+        const emailInput = $("#emailInput")
+        const passwordInput = $("#passwordInput")
+        const togglePasswordBtn = $("#togglePassword")
+        const eyeIcon = $("#eyeIcon")
 
-        $loginForm.on("submit", function (e) {
+        form.on("submit", function (e) {
             e.preventDefault();
 
-            const email = $.trim($emailInput.val())
-            const password = $.trim($passwordInput.val())
+            const email = $.trim(emailInput.val())
+            const password = $.trim(passwordInput.val())
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
             if (!email) return showError("Email tidak boleh kosong!");
@@ -73,13 +75,13 @@
         })
 
 
-        $("#togglePassword").on("click", function () {
-            if ($passwordInput.attr("type") === "password") {
-                $passwordInput.attr("type", "text");
-                $("#eyeIcon").html('<i class="fa-regular fa-eye-slash"></i>');
+        togglePasswordBtn.on("click", function () {
+            if (passwordInput.attr("type") === "password") {
+                passwordInput.attr("type", "text");
+                eyeIcon.html('<i class="fa-regular fa-eye-slash"></i>');
             } else {
-                $passwordInput.attr("type", "password");
-                $("#eyeIcon").html('<i class="fa-regular fa-eye"></i>');
+                passwordInput.attr("type", "password");
+                eyeIcon.html('<i class="fa-regular fa-eye"></i>');
             }
         })
     });
