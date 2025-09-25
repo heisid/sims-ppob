@@ -61,7 +61,7 @@ class Auth extends BaseController
 
     public function register()
     {
-        if (session()->get('jwt_token')) {
+        if (session()->get('token')) {
             return redirect()->to('/dashboard');
         }
 
